@@ -1,0 +1,55 @@
+//
+//  LCCommon.pch
+//  LCCommonProject
+//
+//  Created by 刘成 on 17/3/23.
+//  Copyright © 2017年 刘成. All rights reserved.
+//
+
+#ifndef LCCommon_pch
+#define LCCommon_pch
+
+#import "LCManagerDataCenter.h"
+#import "UIButton+LCCreate.h"
+#import "LCAppConfig.h"
+
+
+#ifdef DEBUG // 处于开发阶段
+#define DELog(format, ...)  NSLog((@"FUNC:%s\n" "LINE:%d\n" format), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#else
+#define DELog(format, ...)
+#endif
+
+//---------------------SandBox目录--------------------------
+//文件目录
+#define kPathTemp(path)             [NSTemporaryDirectory() stringByAppendingPathComponent:path]
+#define kPathDocument(path)         [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:path]
+#define kPathCache(path)            [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:path]
+
+
+#define UserDefaults [NSUserDefaults standardUserDefaults]
+#define NotificationCenter [NSNotificationCenter defaultCenter]
+
+
+#define kWIDTH [UIScreen mainScreen].bounds.size.width
+#define kHEIGHT [UIScreen mainScreen].bounds.size.height
+
+#define VW(view) (view.frame.size.width)
+#define VH(view) (view.frame.size.height)
+#define VX(view) (view.frame.origin.x)
+#define VY(view) (view.frame.origin.y)
+#define FW(view) (VW(view)+VX(view))
+#define FH(view) (VH(view)+VY(view))
+
+
+//RGB的颜色转换
+#define kUIColorFromRGB(rgbValue) [UIColor \
+colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+
+#define kLoadXib(viewStr) [[[NSBundle mainBundle] loadNibNamed:viewStr owner:nil options:nil] lastObject];
+
+
+#endif /* LCCommon_pch */
