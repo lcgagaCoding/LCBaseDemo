@@ -26,15 +26,16 @@
     UIView *_toolBar;
     UIButton *_doneButton;
     UIImageView *_numberImageView;
-    UILabel *_numberLable;
+    UILabel *_numberLabel;
     UIButton *_originalPhotoButton;
-    UILabel *_originalPhotoLable;
+    UILabel *_originalPhotoLabel;
 }
 @property (nonatomic, assign) BOOL isHideNaviBar;
 @property (nonatomic, strong) UIView *cropBgView;
 @property (nonatomic, strong) UIView *cropView;
 
 @property (nonatomic, assign) double progress;
+@property (strong, nonatomic) id alertView;
 @end
 
 @implementation TZPhotoPreviewController
@@ -63,7 +64,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     if (iOS7Later) [UIApplication sharedApplication].statusBarHidden = YES;
     if (_currentIndex) [_collectionView setContentOffset:CGPointMake((self.view.tz_width + 20) * _currentIndex, 0) animated:NO];
     [self refreshNaviBarAndBottomBarState];
@@ -71,7 +72,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     if (iOS7Later) [UIApplication sharedApplication].statusBarHidden = NO;
     [TZImageManager manager].shouldFixOrientation = NO;
 }
@@ -123,12 +124,12 @@
         [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:_tzImagePickerVc.photoPreviewOriginDefImageName] forState:UIControlStateNormal];
         [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:_tzImagePickerVc.photoOriginSelImageName] forState:UIControlStateSelected];
         
-        _originalPhotoLable = [[UILabel alloc] init];
-        _originalPhotoLable.frame = CGRectMake(fullImageWidth + 42, 0, 80, 44);
-        _originalPhotoLable.textAlignment = NSTextAlignmentLeft;
-        _originalPhotoLable.font = [UIFont systemFontOfSize:13];
-        _originalPhotoLable.textColor = [UIColor whiteColor];
-        _originalPhotoLable.backgroundColor = [UIColor clearColor];
+        _originalPhotoLabel = [[UILabel alloc] init];
+        _originalPhotoLabel.frame = CGRectMake(fullImageWidth + 42, 0, 80, 44);
+        _originalPhotoLabel.textAlignment = NSTextAlignmentLeft;
+        _originalPhotoLabel.font = [UIFont systemFontOfSize:13];
+        _originalPhotoLabel.textColor = [UIColor whiteColor];
+        _originalPhotoLabel.backgroundColor = [UIColor clearColor];
         if (_isSelectOriginalPhoto) [self showPhotoBytes];
     }
     
@@ -144,20 +145,20 @@
     _numberImageView.frame = CGRectMake(self.view.tz_width - 56 - 28, 7, 30, 30);
     _numberImageView.hidden = _tzImagePickerVc.selectedModels.count <= 0;
     
-    _numberLable = [[UILabel alloc] init];
-    _numberLable.frame = _numberImageView.frame;
-    _numberLable.font = [UIFont systemFontOfSize:15];
-    _numberLable.textColor = [UIColor whiteColor];
-    _numberLable.textAlignment = NSTextAlignmentCenter;
-    _numberLable.text = [NSString stringWithFormat:@"%zd",_tzImagePickerVc.selectedModels.count];
-    _numberLable.hidden = _tzImagePickerVc.selectedModels.count <= 0;
-    _numberLable.backgroundColor = [UIColor clearColor];
+    _numberLabel = [[UILabel alloc] init];
+    _numberLabel.frame = _numberImageView.frame;
+    _numberLabel.font = [UIFont systemFontOfSize:15];
+    _numberLabel.textColor = [UIColor whiteColor];
+    _numberLabel.textAlignment = NSTextAlignmentCenter;
+    _numberLabel.text = [NSString stringWithFormat:@"%zd",_tzImagePickerVc.selectedModels.count];
+    _numberLabel.hidden = _tzImagePickerVc.selectedModels.count <= 0;
+    _numberLabel.backgroundColor = [UIColor clearColor];
 
-    [_originalPhotoButton addSubview:_originalPhotoLable];
+    [_originalPhotoButton addSubview:_originalPhotoLabel];
     [_toolBar addSubview:_doneButton];
     [_toolBar addSubview:_originalPhotoButton];
     [_toolBar addSubview:_numberImageView];
-    [_toolBar addSubview:_numberLable];
+    [_toolBar addSubview:_numberLabel];
     [self.view addSubview:_toolBar];
 }
 
@@ -283,9 +284,10 @@
     TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)self.navigationController;
     // 如果图片正在从iCloud同步中,提醒用户
     if (_progress > 0 && _progress < 1) {
-        [_tzImagePickerVc showAlertWithTitle:[NSBundle tz_localizedStringForKey:@"Synchronizing photos from iCloud"]]; return;
+        _alertView = [_tzImagePickerVc showAlertWithTitle:[NSBundle tz_localizedStringForKey:@"Synchronizing photos from iCloud"]];
+        return;
     }
-    
+
     // 如果没有选中过照片 点击确定时选中当前预览的照片
     if (_tzImagePickerVc.selectedModels.count == 0 && _tzImagePickerVc.minImagesCount <= 0) {
         TZAssetModel *model = _models[_currentIndex];
@@ -313,7 +315,7 @@
 - (void)originalPhotoButtonClick {
     _originalPhotoButton.selected = !_originalPhotoButton.isSelected;
     _isSelectOriginalPhoto = _originalPhotoButton.isSelected;
-    _originalPhotoLable.hidden = !_originalPhotoButton.isSelected;
+    _originalPhotoLabel.hidden = !_originalPhotoButton.isSelected;
     if (_isSelectOriginalPhoto) {
         [self showPhotoBytes];
         if (!_selectButton.isSelected) {
@@ -365,6 +367,12 @@
     }
     [cell setImageProgressUpdateBlock:^(double progress) {
         weakSelf.progress = progress;
+        if (progress >= 1) {
+            if (weakSelf.alertView) {
+                [_tzImagePickerVc hideAlertView:weakSelf.alertView];
+                [weakSelf doneButtonClick];
+            }
+        }
     }];
     return cell;
 }
@@ -384,19 +392,19 @@
 #pragma mark - Private Method
 
 - (void)dealloc {
-    //NSLog(@"TZPhotoPreviewController dealloc");
+    // NSLog(@"%@ dealloc",NSStringFromClass(self.class));
 }
 
 - (void)refreshNaviBarAndBottomBarState {
     TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)self.navigationController;
     TZAssetModel *model = _models[_currentIndex];
     _selectButton.selected = model.isSelected;
-    _numberLable.text = [NSString stringWithFormat:@"%zd",_tzImagePickerVc.selectedModels.count];
+    _numberLabel.text = [NSString stringWithFormat:@"%zd",_tzImagePickerVc.selectedModels.count];
     _numberImageView.hidden = (_tzImagePickerVc.selectedModels.count <= 0 || _isHideNaviBar || _isCropImage);
-    _numberLable.hidden = (_tzImagePickerVc.selectedModels.count <= 0 || _isHideNaviBar || _isCropImage);
+    _numberLabel.hidden = (_tzImagePickerVc.selectedModels.count <= 0 || _isHideNaviBar || _isCropImage);
     
     _originalPhotoButton.selected = _isSelectOriginalPhoto;
-    _originalPhotoLable.hidden = !_originalPhotoButton.isSelected;
+    _originalPhotoLabel.hidden = !_originalPhotoButton.isSelected;
     if (_isSelectOriginalPhoto) [self showPhotoBytes];
     
     // If is previewing video, hide original photo button
@@ -404,10 +412,10 @@
     if (!_isHideNaviBar) {
         if (model.type == TZAssetModelMediaTypeVideo) {
             _originalPhotoButton.hidden = YES;
-            _originalPhotoLable.hidden = YES;
+            _originalPhotoLabel.hidden = YES;
         } else {
             _originalPhotoButton.hidden = NO;
-            if (_isSelectOriginalPhoto)  _originalPhotoLable.hidden = NO;
+            if (_isSelectOriginalPhoto)  _originalPhotoLabel.hidden = NO;
         }
     }
     
@@ -415,18 +423,18 @@
     _selectButton.hidden = !_tzImagePickerVc.showSelectBtn;
     // 让宽度/高度小于 最小可选照片尺寸 的图片不能选中
     if (![[TZImageManager manager] isPhotoSelectableWithAsset:model.asset]) {
-        _numberLable.hidden = YES;
+        _numberLabel.hidden = YES;
         _numberImageView.hidden = YES;
         _selectButton.hidden = YES;
         _originalPhotoButton.hidden = YES;
-        _originalPhotoLable.hidden = YES;
+        _originalPhotoLabel.hidden = YES;
         _doneButton.hidden = YES;
     }
 }
 
 - (void)showPhotoBytes {
     [[TZImageManager manager] getPhotosBytesWithArray:@[_models[_currentIndex]] completion:^(NSString *totalBytes) {
-        _originalPhotoLable.text = [NSString stringWithFormat:@"(%@)",totalBytes];
+        _originalPhotoLabel.text = [NSString stringWithFormat:@"(%@)",totalBytes];
     }];
 }
 

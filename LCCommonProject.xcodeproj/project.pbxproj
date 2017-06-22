@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0B39A51EFBA10F0060F8D7 /* LCTabbarService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B39A41EFBA10F0060F8D7 /* LCTabbarService.m */; };
+		4B0B39A81EFBA43D0060F8D7 /* CYLTabBarControllerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B39A71EFBA43D0060F8D7 /* CYLTabBarControllerConfig.m */; };
+		4B0B39AB1EFBA89B0060F8D7 /* Test1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B39AA1EFBA89B0060F8D7 /* Test1ViewController.m */; };
+		4B0B39AE1EFBA8AA0060F8D7 /* Test2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B39AD1EFBA8AA0060F8D7 /* Test2ViewController.m */; };
+		4B0B39B11EFBA8B20060F8D7 /* Test3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B39B01EFBA8B20060F8D7 /* Test3ViewController.m */; };
+		4B0B39B41EFBA8BF0060F8D7 /* Test4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0B39B31EFBA8BF0060F8D7 /* Test4ViewController.m */; };
 		4B17C0121E8B8C7400729B3D /* AdviseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B17C0111E8B8C7400729B3D /* AdviseModel.m */; };
 		4B1884291E9BA7D700F77E5E /* LCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1884281E9BA7D700F77E5E /* LCLoginViewController.m */; };
 		4B1884311E9CCD1900F77E5E /* CrashReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1884301E9CCD1900F77E5E /* CrashReport.m */; };
@@ -70,6 +76,18 @@
 /* Begin PBXFileReference section */
 		1744856809ACCF4EBCCF796A /* libPods-LCCommonProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LCCommonProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		24F4131B5C7AB25FF10D7072 /* Pods-LCCommonProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LCCommonProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-LCCommonProject/Pods-LCCommonProject.release.xcconfig"; sourceTree = "<group>"; };
+		4B0B39A31EFBA10F0060F8D7 /* LCTabbarService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTabbarService.h; sourceTree = "<group>"; };
+		4B0B39A41EFBA10F0060F8D7 /* LCTabbarService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCTabbarService.m; sourceTree = "<group>"; };
+		4B0B39A61EFBA43D0060F8D7 /* CYLTabBarControllerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYLTabBarControllerConfig.h; sourceTree = "<group>"; };
+		4B0B39A71EFBA43D0060F8D7 /* CYLTabBarControllerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CYLTabBarControllerConfig.m; sourceTree = "<group>"; };
+		4B0B39A91EFBA89B0060F8D7 /* Test1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test1ViewController.h; sourceTree = "<group>"; };
+		4B0B39AA1EFBA89B0060F8D7 /* Test1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test1ViewController.m; sourceTree = "<group>"; };
+		4B0B39AC1EFBA8AA0060F8D7 /* Test2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test2ViewController.h; sourceTree = "<group>"; };
+		4B0B39AD1EFBA8AA0060F8D7 /* Test2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test2ViewController.m; sourceTree = "<group>"; };
+		4B0B39AF1EFBA8B20060F8D7 /* Test3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test3ViewController.h; sourceTree = "<group>"; };
+		4B0B39B01EFBA8B20060F8D7 /* Test3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test3ViewController.m; sourceTree = "<group>"; };
+		4B0B39B21EFBA8BF0060F8D7 /* Test4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test4ViewController.h; sourceTree = "<group>"; };
+		4B0B39B31EFBA8BF0060F8D7 /* Test4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test4ViewController.m; sourceTree = "<group>"; };
 		4B17C0101E8B8C7400729B3D /* AdviseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdviseModel.h; sourceTree = "<group>"; };
 		4B17C0111E8B8C7400729B3D /* AdviseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdviseModel.m; sourceTree = "<group>"; };
 		4B1884271E9BA7D700F77E5E /* LCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCLoginViewController.h; sourceTree = "<group>"; };
@@ -184,6 +202,17 @@
 				24F4131B5C7AB25FF10D7072 /* Pods-LCCommonProject.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		4B0B39A21EFBA0F30060F8D7 /* Tabbar */ = {
+			isa = PBXGroup;
+			children = (
+				4B0B39A31EFBA10F0060F8D7 /* LCTabbarService.h */,
+				4B0B39A41EFBA10F0060F8D7 /* LCTabbarService.m */,
+				4B0B39A61EFBA43D0060F8D7 /* CYLTabBarControllerConfig.h */,
+				4B0B39A71EFBA43D0060F8D7 /* CYLTabBarControllerConfig.m */,
+			);
+			path = Tabbar;
 			sourceTree = "<group>";
 		};
 		4B17C00F1E8B8C5900729B3D /* model */ = {
@@ -423,6 +452,7 @@
 		4BA953071E83CC5C000171AF /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				4B0B39A21EFBA0F30060F8D7 /* Tabbar */,
 				4B1885391EA49ED300F77E5E /* Guide(引导页) */,
 				4B1884841EA0CBA600F77E5E /* BigImageShow(大图展示) */,
 				4BB160451E8A014D005E5DA3 /* Advise(广告页) */,
@@ -497,6 +527,14 @@
 				4B62BE921E9B67A3005CAC5C /* Main */,
 				4B54D57F1E8CF642001B4B35 /* Web */,
 				4BB160401E891663005E5DA3 /* Login(登录页) */,
+				4B0B39A91EFBA89B0060F8D7 /* Test1ViewController.h */,
+				4B0B39AA1EFBA89B0060F8D7 /* Test1ViewController.m */,
+				4B0B39AC1EFBA8AA0060F8D7 /* Test2ViewController.h */,
+				4B0B39AD1EFBA8AA0060F8D7 /* Test2ViewController.m */,
+				4B0B39AF1EFBA8B20060F8D7 /* Test3ViewController.h */,
+				4B0B39B01EFBA8B20060F8D7 /* Test3ViewController.m */,
+				4B0B39B21EFBA8BF0060F8D7 /* Test4ViewController.h */,
+				4B0B39B31EFBA8BF0060F8D7 /* Test4ViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -744,15 +782,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B0B39A51EFBA10F0060F8D7 /* LCTabbarService.m in Sources */,
 				4BB160481E8A01AA005E5DA3 /* LCAdviseService.m in Sources */,
 				4BB1604B1E8A01BA005E5DA3 /* LCLaunchService.m in Sources */,
+				4B0B39B41EFBA8BF0060F8D7 /* Test4ViewController.m in Sources */,
 				4B8135B41E8F40C300C51DF4 /* LCHttpRequestGenerator.m in Sources */,
+				4B0B39A81EFBA43D0060F8D7 /* CYLTabBarControllerConfig.m in Sources */,
 				4B62BE951E9B67D9005CAC5C /* LCMainViewController.m in Sources */,
 				4BA953121E83CDE4000171AF /* LCBaseNavigationController.m in Sources */,
 				4B18853C1EA49F0100F77E5E /* LCGuideService.m in Sources */,
 				4B8135B11E8F409900C51DF4 /* LCHttpClient.m in Sources */,
 				4B8135BE1E9B233400C51DF4 /* LCHttpResponseErrorHandler.m in Sources */,
 				4B8135B71E8F436B00C51DF4 /* LCBaseRequestModel.m in Sources */,
+				4B0B39AB1EFBA89B0060F8D7 /* Test1ViewController.m in Sources */,
 				4B54D57E1E8CE1AA001B4B35 /* LCAdviseView.m in Sources */,
 				4B8135D21E9B56AE00C51DF4 /* LCHttpEngineTool.m in Sources */,
 				4B8135CF1E9B3ADE00C51DF4 /* LCHttpEngine.m in Sources */,
@@ -762,10 +804,12 @@
 				4B54D5821E8CF6C4001B4B35 /* LCBaseWebController.m in Sources */,
 				4BA953151E83CE1B000171AF /* LCBaseViewController.m in Sources */,
 				4BA953061E83CC56000171AF /* LCBaseModel.m in Sources */,
+				4B0B39AE1EFBA8AA0060F8D7 /* Test2ViewController.m in Sources */,
 				4B54D58A1E8D0529001B4B35 /* LCAdviseWebController.m in Sources */,
 				4B1884871EA0CBD800F77E5E /* LCBigImageShowService.m in Sources */,
 				4B8135C91E9B2E2300C51DF4 /* LCNetworkingAutoCancelRequests.m in Sources */,
 				4BA952CD1E811BF0000171AF /* AppDelegate.m in Sources */,
+				4B0B39B11EFBA8B20060F8D7 /* Test3ViewController.m in Sources */,
 				4B1885471EA4A7BA00F77E5E /* UIButton+LCCreate.m in Sources */,
 				4B8135CC1E9B305900C51DF4 /* NSObject+LCNetWorkingAutoCancel.m in Sources */,
 				4BA953181E83CE40000171AF /* LCBaseTabBarController.m in Sources */,

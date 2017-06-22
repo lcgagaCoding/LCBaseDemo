@@ -9,7 +9,6 @@
 #import "LCBaseTabBarController.h"
 #import "LCBaseNavigationController.h"
 
-
 #define kClassKey   @"rootVCClassString"
 #define kTitleKey   @"title"
 #define kImgKey     @"imageName"
@@ -37,22 +36,22 @@
                                    kImgKey    : @"tabBar_home_n.png",
                                    kSelImgKey : @"tabBar_home_s.png"},
                                  
-                                 @{kClassKey  : @"MyLoanViewController",
+                                 @{kClassKey  : @"Test1ViewController",
                                    kTitleKey  : @"贷款",
                                    kImgKey    : @"tabBar_loan_n.png",
                                    kSelImgKey : @"tabBar_loan_s.png"},
                                  
-                                 //                                 @{kClassKey  : @"MyInsuranceViewController",
-                                 //                                   kTitleKey  : @"车险",
-                                 //                                   kImgKey    : @"tabBar_insurance_n.png",
-                                 //                                   kSelImgKey : @"tabBar_insurance_s.png"},
+                                 @{kClassKey  : @"Test2ViewController",
+                                   kTitleKey  : @"车险",
+                                   kImgKey    : @"tabBar_insurance_n.png",
+                                   kSelImgKey : @"tabBar_insurance_s.png"},
                                  
-                                 @{kClassKey  : @"FindViewController",
+                                 @{kClassKey  : @"Test3ViewController",
                                    kTitleKey  : @"发现",
                                    kImgKey    : @"tabBar_find_n.png",
                                    kSelImgKey : @"tabBar_find_s.png"},
                                  
-                                 @{kClassKey  : @"MyViewController",
+                                 @{kClassKey  : @"Test4ViewController",
                                    kTitleKey  : @"我的",
                                    kImgKey    : @"tabBar_me_n.png",
                                    kSelImgKey : @"tabBar_me_s.png"}];

@@ -7,7 +7,7 @@
 //
 
 #import "LCMainViewController.h"
-#import "LCLoginViewController.h"
+#import "LCLaunchService.h"
 
 @interface LCMainViewController ()
 
@@ -22,7 +22,7 @@
     
     
     UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 50, kWIDTH, 200)];
-    [button setTitle:@"登录" forState:UIControlStateNormal];
+    [button setTitle:@"退出登录" forState:UIControlStateNormal];
     button.backgroundColor = [UIColor blueColor];
     [button addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
@@ -32,9 +32,7 @@
     
 }
 - (void)login{
-    LCLoginViewController *lvc = [[LCLoginViewController alloc]init];
-    [self.navigationController pushViewController:lvc animated:YES];
-    
+    [[LCLaunchService launchService] launchWindowWithType:LcLaunchTypeLogin];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

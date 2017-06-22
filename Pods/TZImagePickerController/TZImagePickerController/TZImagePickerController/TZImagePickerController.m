@@ -4,7 +4,7 @@
 //
 //  Created by 谭真 on 15/12/24.
 //  Copyright © 2015年 谭真. All rights reserved.
-//  version 1.7.8 - 2016.12.20
+//  version 1.8.0 - 2017.06.03
 
 #import "TZImagePickerController.h"
 #import "TZPhotoPickerController.h"
@@ -16,7 +16,7 @@
 
 @interface TZImagePickerController () {
     NSTimer *_timer;
-    UILabel *_tipLable;
+    UILabel *_tipLabel;
     UIButton *_settingBtn;
     BOOL _pushPhotoPickerVc;
     BOOL _didPushPhotoPickerVc;
@@ -24,7 +24,7 @@
     UIButton *_progressHUD;
     UIView *_HUDContainer;
     UIActivityIndicatorView *_HUDIndicatorView;
-    UILabel *_HUDLable;
+    UILabel *_HUDLabel;
     
     UIStatusBarStyle _originStatusBarStyle;
 }
@@ -43,7 +43,7 @@
     self.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationBar.translucent = YES;
     [TZImageManager manager].shouldFixOrientation = NO;
-
+    
     // Default appearance, you can reset these after this method
     // 默认的外观，你可以在这个方法后重置
     self.oKButtonTitleColorNormal   = [UIColor colorWithRed:(83/255.0) green:(179/255.0) blue:(17/255.0) alpha:1.0];
@@ -54,6 +54,28 @@
         self.navigationBar.tintColor = [UIColor whiteColor];
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+}
+
+- (void)setNaviBgColor:(UIColor *)naviBgColor {
+    _naviBgColor = naviBgColor;
+    self.navigationBar.barTintColor = naviBgColor;
+}
+
+- (void)setNaviTitleColor:(UIColor *)naviTitleColor {
+    _naviTitleColor = naviTitleColor;
+    [self configNaviTitleAppearance];
+}
+
+- (void)setNaviTitleFont:(UIFont *)naviTitleFont {
+    _naviTitleFont = naviTitleFont;
+    [self configNaviTitleAppearance];
+}
+
+- (void)configNaviTitleAppearance {
+    NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
+    textAttrs[NSForegroundColorAttributeName] = self.naviTitleColor;
+    textAttrs[NSFontAttributeName] = self.naviTitleFont;
+    self.navigationBar.titleTextAttributes = textAttrs;
 }
 
 - (void)setBarItemTextFont:(UIFont *)barItemTextFont {
@@ -82,7 +104,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _originStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
-    [UIApplication sharedApplication].statusBarStyle = iOS7Later ? UIStatusBarStyleLightContent : UIStatusBarStyleBlackOpaque;
+    
+    if (self.isStatusBarDefault) {
+        [UIApplication sharedApplication].statusBarStyle = iOS7Later ? UIStatusBarStyleDefault : UIStatusBarStyleBlackOpaque;
+    }else{
+        [UIApplication sharedApplication].statusBarStyle = iOS7Later ? UIStatusBarStyleLightContent : UIStatusBarStyleBlackOpaque;
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -121,17 +149,17 @@
         [self configDefaultSetting];
         
         if (![[TZImageManager manager] authorizationStatusAuthorized]) {
-            _tipLable = [[UILabel alloc] init];
-            _tipLable.frame = CGRectMake(8, 120, self.view.tz_width - 16, 60);
-            _tipLable.textAlignment = NSTextAlignmentCenter;
-            _tipLable.numberOfLines = 0;
-            _tipLable.font = [UIFont systemFontOfSize:16];
-            _tipLable.textColor = [UIColor blackColor];
+            _tipLabel = [[UILabel alloc] init];
+            _tipLabel.frame = CGRectMake(8, 120, self.view.tz_width - 16, 60);
+            _tipLabel.textAlignment = NSTextAlignmentCenter;
+            _tipLabel.numberOfLines = 0;
+            _tipLabel.font = [UIFont systemFontOfSize:16];
+            _tipLabel.textColor = [UIColor blackColor];
             NSString *appName = [[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleDisplayName"];
             if (!appName) appName = [[NSBundle mainBundle].infoDictionary valueForKey:@"CFBundleName"];
             NSString *tipText = [NSString stringWithFormat:[NSBundle tz_localizedStringForKey:@"Allow %@ to access your album in \"Settings -> Privacy -> Photos\""],appName];
-            _tipLable.text = tipText;
-            [self.view addSubview:_tipLable];
+            _tipLabel.text = tipText;
+            [self.view addSubview:_tipLabel];
             
             _settingBtn = [UIButton buttonWithType:UIButtonTypeSystem];
             [_settingBtn setTitle:self.settingBtnTitleStr forState:UIControlStateNormal];
@@ -156,7 +184,7 @@
         self.selectedAssets = [NSMutableArray arrayWithArray:selectedAssets];
         self.allowPickingOriginalPhoto = self.allowPickingOriginalPhoto;
         [self configDefaultSetting];
-
+        
         previewVc.photos = [NSMutableArray arrayWithArray:selectedPhotos];
         previewVc.currentIndex = index;
         __weak typeof(self) weakSelf = self;
@@ -200,6 +228,8 @@
     self.timeout = 15;
     self.photoWidth = 828.0;
     self.photoPreviewMaxWidth = 600;
+    self.naviTitleColor = [UIColor whiteColor];
+    self.naviTitleFont = [UIFont systemFontOfSize:17];
     self.barItemTextFont = [UIFont systemFontOfSize:15];
     self.barItemTextColor = [UIColor whiteColor];
     self.allowPreview = YES;
@@ -229,7 +259,7 @@
 
 - (void)observeAuthrizationStatusChange {
     if ([[TZImageManager manager] authorizationStatusAuthorized]) {
-        [_tipLable removeFromSuperview];
+        [_tipLabel removeFromSuperview];
         [_settingBtn removeFromSuperview];
         [_timer invalidate];
         _timer = nil;
@@ -250,23 +280,42 @@
             _didPushPhotoPickerVc = YES;
         }];
     }
+    
+    TZAlbumPickerController *albumPickerVc = (TZAlbumPickerController *)self.visibleViewController;
+    if ([albumPickerVc isKindOfClass:[TZAlbumPickerController class]]) {
+        [albumPickerVc configTableView];
+    }
 }
 
-- (void)showAlertWithTitle:(NSString *)title {
+- (id)showAlertWithTitle:(NSString *)title {
     if (iOS8Later) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:[NSBundle tz_localizedStringForKey:@"OK"] style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
+        return alertController;
     } else {
-        [[[UIAlertView alloc] initWithTitle:title message:nil delegate:nil cancelButtonTitle:[NSBundle tz_localizedStringForKey:@"OK"] otherButtonTitles:nil, nil] show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:nil delegate:nil cancelButtonTitle:[NSBundle tz_localizedStringForKey:@"OK"] otherButtonTitles:nil, nil];
+        [alertView show];
+        return alertView;
     }
+}
+
+- (void)hideAlertView:(id)alertView {
+    if ([alertView isKindOfClass:[UIAlertController class]]) {
+        UIAlertController *alertC = alertView;
+        [alertC dismissViewControllerAnimated:YES completion:nil];
+    } else if ([alertView isKindOfClass:[UIAlertView class]]) {
+        UIAlertView *alertV = alertView;
+        [alertV dismissWithClickedButtonIndex:0 animated:YES];
+    }
+    alertView = nil;
 }
 
 - (void)showProgressHUD {
     if (!_progressHUD) {
         _progressHUD = [UIButton buttonWithType:UIButtonTypeCustom];
         [_progressHUD setBackgroundColor:[UIColor clearColor]];
-
+        
         _HUDContainer = [[UIView alloc] init];
         _HUDContainer.frame = CGRectMake((self.view.tz_width - 120) / 2, (self.view.tz_height - 90) / 2, 120, 90);
         _HUDContainer.layer.cornerRadius = 8;
@@ -277,14 +326,14 @@
         _HUDIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         _HUDIndicatorView.frame = CGRectMake(45, 15, 30, 30);
         
-        _HUDLable = [[UILabel alloc] init];
-        _HUDLable.frame = CGRectMake(0,40, 120, 50);
-        _HUDLable.textAlignment = NSTextAlignmentCenter;
-        _HUDLable.text = self.processHintStr;
-        _HUDLable.font = [UIFont systemFontOfSize:15];
-        _HUDLable.textColor = [UIColor whiteColor];
+        _HUDLabel = [[UILabel alloc] init];
+        _HUDLabel.frame = CGRectMake(0,40, 120, 50);
+        _HUDLabel.textAlignment = NSTextAlignmentCenter;
+        _HUDLabel.text = self.processHintStr;
+        _HUDLabel.font = [UIFont systemFontOfSize:15];
+        _HUDLabel.textColor = [UIColor whiteColor];
         
-        [_HUDContainer addSubview:_HUDLable];
+        [_HUDContainer addSubview:_HUDLabel];
         [_HUDContainer addSubview:_HUDIndicatorView];
         [_progressHUD addSubview:_HUDContainer];
     }
@@ -292,8 +341,9 @@
     [[UIApplication sharedApplication].keyWindow addSubview:_progressHUD];
     
     // if over time, dismiss HUD automatic
+    __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.timeout * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self hideProgressHUD];
+        [weakSelf hideProgressHUD];
     });
 }
 
@@ -348,6 +398,11 @@
     } else if (_timeout > 60) {
         _timeout = 60;
     }
+}
+
+- (void)setPickerDelegate:(id<TZImagePickerControllerDelegate>)pickerDelegate {
+    _pickerDelegate = pickerDelegate;
+    [TZImageManager manager].pickerDelegate = pickerDelegate;
 }
 
 - (void)setColumnNumber:(NSInteger)columnNumber {
@@ -442,6 +497,10 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 
+- (void)dealloc {
+    // NSLog(@"%@ dealloc",NSStringFromClass(self.class));
+}
+
 #pragma mark - Public
 
 - (void)cancelButtonClick {
@@ -455,10 +514,12 @@
 }
 
 - (void)callDelegateMethod {
-    // 兼容旧版本
-    if ([self.pickerDelegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
-        [self.pickerDelegate imagePickerControllerDidCancel:self];
-    }
+    /*
+     // 兼容旧版本
+     if ([self.pickerDelegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+     [self.pickerDelegate imagePickerControllerDidCancel:self];
+     }
+     */
     if ([self.pickerDelegate respondsToSelector:@selector(tz_imagePickerControllerDidCancel:)]) {
         [self.pickerDelegate tz_imagePickerControllerDidCancel:self];
     }
@@ -481,54 +542,67 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = [NSBundle tz_localizedStringForKey:@"Photos"];
+    
     TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:imagePickerVc.cancelBtnTitleStr style:UIBarButtonItemStylePlain target:imagePickerVc action:@selector(cancelButtonClick)];
-    [self configTableView];
-    // 1.6.10 采用微信的方式，只在相册列表页定义backBarButtonItem为返回，其余的顺系统的做法
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSBundle tz_localizedStringForKey:@"Back"] style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
     [imagePickerVc hideProgressHUD];
-    if (_albumArr) {
-        for (TZAlbumModel *albumModel in _albumArr) {
-            albumModel.selectedModels = imagePickerVc.selectedModels;
-        }
-        [_tableView reloadData];
-    } else {
-        [self configTableView];
-    }
     if (imagePickerVc.allowTakePicture) {
         self.navigationItem.title = [NSBundle tz_localizedStringForKey:@"Photos"];
     } else if (imagePickerVc.allowPickingVideo) {
         self.navigationItem.title = [NSBundle tz_localizedStringForKey:@"Videos"];
     }
+    
+    // 1.6.10 采用微信的方式，只在相册列表页定义backBarButtonItem为返回，其余的顺系统的做法
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSBundle tz_localizedStringForKey:@"Back"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+    [self configTableView];
 }
 
 - (void)configTableView {
-    TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
-    [[TZImageManager manager] getAllAlbums:imagePickerVc.allowPickingVideo allowPickingImage:imagePickerVc.allowPickingImage completion:^(NSArray<TZAlbumModel *> *models) {
-        _albumArr = [NSMutableArray arrayWithArray:models];
-        for (TZAlbumModel *albumModel in _albumArr) {
-            albumModel.selectedModels = imagePickerVc.selectedModels;
-        }
-        if (!_tableView) {
-            CGFloat top = 44;
-            if (iOS7Later) top += 20;
-            _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, top, self.view.tz_width, self.view.tz_height - top) style:UITableViewStylePlain];
-            _tableView.rowHeight = 70;
-            _tableView.tableFooterView = [[UIView alloc] init];
-            _tableView.dataSource = self;
-            _tableView.delegate = self;
-            [_tableView registerClass:[TZAlbumCell class] forCellReuseIdentifier:@"TZAlbumCell"];
-            [self.view addSubview:_tableView];
-        } else {
-            [_tableView reloadData];
-        }
-    }];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        TZImagePickerController *imagePickerVc = (TZImagePickerController *)self.navigationController;
+        [[TZImageManager manager] getAllAlbums:imagePickerVc.allowPickingVideo allowPickingImage:imagePickerVc.allowPickingImage completion:^(NSArray<TZAlbumModel *> *models) {
+            _albumArr = [NSMutableArray arrayWithArray:models];
+            for (TZAlbumModel *albumModel in _albumArr) {
+                albumModel.selectedModels = imagePickerVc.selectedModels;
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (!_tableView) {
+                    CGFloat top = 0;
+                    CGFloat tableViewHeight = 0;
+                    if (self.navigationController.navigationBar.isTranslucent) {
+                        top = 44;
+                        if (iOS7Later) top += 20;
+                        tableViewHeight = self.view.tz_height - top;
+                    } else {
+                        CGFloat navigationHeight = 44;
+                        if (iOS7Later) navigationHeight += 20;
+                        tableViewHeight = self.view.tz_height - navigationHeight;
+                    }
+                    
+                    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, top, self.view.tz_width, tableViewHeight) style:UITableViewStylePlain];
+                    _tableView.rowHeight = 70;
+                    _tableView.tableFooterView = [[UIView alloc] init];
+                    _tableView.dataSource = self;
+                    _tableView.delegate = self;
+                    [_tableView registerClass:[TZAlbumCell class] forCellReuseIdentifier:@"TZAlbumCell"];
+                    [self.view addSubview:_tableView];
+                } else {
+                    [_tableView reloadData];
+                }
+            });
+        }];
+    });
+}
+
+- (void)dealloc {
+    // NSLog(@"%@ dealloc",NSStringFromClass(self.class));
 }
 
 #pragma mark - UITableViewDataSource && Delegate
@@ -551,10 +625,6 @@
     photoPickerVc.columnNumber = self.columnNumber;
     TZAlbumModel *model = _albumArr[indexPath.row];
     photoPickerVc.model = model;
-    __weak typeof(self) weakSelf = self;
-    [photoPickerVc setBackButtonClickHandle:^(TZAlbumModel *model) {
-        [weakSelf.albumArr replaceObjectAtIndex:indexPath.row withObject:model];
-    }];
     [self.navigationController pushViewController:photoPickerVc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }

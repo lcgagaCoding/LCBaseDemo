@@ -7,6 +7,8 @@
 //
 
 #import "LCLaunchService.h"
+#import "LCTabbarService.h"
+
 #import "LCAppConfig.h"
 #import "LCBaseTabBarController.h"
 #import "LCAdviseService.h"
@@ -129,13 +131,15 @@ static NSString *launchServiceAppVersion = @"launchServiceAppVersion";
 }
 
 - (void)pushMain{
-    LCBaseTabBarController *tabbar = [[LCBaseTabBarController alloc] init];
+    UITabBarController *tabbar = [[LCTabbarService tabbarService] getTabbarWithStyle:LCTabbarStyleCYLT];
     [UIApplication sharedApplication].delegate.window.rootViewController = tabbar;
 }
 
 - (void)pushGuide{
     
     [LCGuideService showGuide];
+    UITabBarController *tabbar = [[LCTabbarService tabbarService] getTabbarWithStyle:LCTabbarStyleNormal];
+    [UIApplication sharedApplication].delegate.window.rootViewController = tabbar;
 }
 - (void)pushLogin{
 
