@@ -26,6 +26,7 @@ platform:ios, '8.0'
     pod 'JPush'
     
     pod 'CYLTabBarController'
+    pod 'MGJRouter'
     
 end
 

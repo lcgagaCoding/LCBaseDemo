@@ -42,7 +42,7 @@ static NSTimeInterval kNetworkingTimeoutSeconds = 20.0f;
     
     //获取通用参数
     NSMutableDictionary *commonParams = [NSMutableDictionary new];
-//    [commonParams addEntriesFromDictionary:dataModel.parameters];
+    [commonParams addEntriesFromDictionary:dataModel.parameters];
     
     
     NSString *urlString = [self URLStringWithServiceUrl:apiBaseUrl path:dataModel.apiMethodPath];

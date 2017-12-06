@@ -17,6 +17,7 @@ static CGRect originalFrame;
 + (void)showBigImage:(UIImageView *)selectedImageView
 {
     UIImage *image=selectedImageView.image;
+    if(image==nil) return;
     
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
     UIView *backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];

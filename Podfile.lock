@@ -34,6 +34,7 @@ PODS:
   - M80AttributedLabel (1.6.3)
   - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
+  - MGJRouter (0.9.3)
   - MJExtension (3.0.13)
   - NJKWebViewProgress (0.2.3):
     - NJKWebViewProgress/Core (= 0.2.3)
@@ -68,6 +69,7 @@ DEPENDENCIES:
   - M80AttributedLabel
   - Masonry
   - MBProgressHUD
+  - MGJRouter
   - MJExtension
   - NJKWebViewProgress
   - NullSafe
@@ -91,6 +93,7 @@ SPEC CHECKSUMS:
   M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MGJRouter: f65821e2aeffc8f9e84b254c8f1c0dd80f048aa9
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   NullSafe: cbf1f77a24558e49bc76e2673f31250d3087c792
@@ -100,6 +103,6 @@ SPEC CHECKSUMS:
   Toast: 14a93686d6c8bfe2727afd342414e35660a8a1f3
   TZImagePickerController: 086034156913375cb19c8e4103562f15322c3b36
 
-PODFILE CHECKSUM: ffdc9fcf15cf495710678bf23d581d99e38bd8bb
+PODFILE CHECKSUM: fb89b87958e401c37e53a9c4a96b02d86f895c55
 
 COCOAPODS: 1.0.1

@@ -166,6 +166,7 @@
 		4BB160471E8A01AA005E5DA3 /* LCAdviseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCAdviseService.m; sourceTree = "<group>"; };
 		4BB160491E8A01BA005E5DA3 /* LCLaunchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCLaunchService.h; sourceTree = "<group>"; };
 		4BB1604A1E8A01BA005E5DA3 /* LCLaunchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCLaunchService.m; sourceTree = "<group>"; };
+		4BD260B11F020770009BC93A /* LCCommonProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LCCommonProject.entitlements; sourceTree = "<group>"; };
 		E895DD251D02E6AE96A09E9D /* Pods-LCCommonProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LCCommonProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LCCommonProject/Pods-LCCommonProject.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -390,6 +391,7 @@
 		4BA952C71E811BF0000171AF /* LCCommonProject */ = {
 			isa = PBXGroup;
 			children = (
+				4BD260B11F020770009BC93A /* LCCommonProject.entitlements */,
 				4B1885441EA4A63F00F77E5E /* Category */,
 				4B18842A1E9CC5DD00F77E5E /* Componets */,
 				4B54D5831E8CF9BB001B4B35 /* Manager */,
@@ -667,6 +669,11 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 8A9QEDXRQQ;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 0;
+							};
+						};
 					};
 					4BA952DD1E811BF0000171AF = {
 						CreatedOnToolsVersion = 8.2;

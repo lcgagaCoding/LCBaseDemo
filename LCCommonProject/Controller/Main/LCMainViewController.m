@@ -9,7 +9,7 @@
 #import "LCMainViewController.h"
 #import "LCLaunchService.h"
 
-@interface LCMainViewController ()
+@interface LCMainViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 
 @end

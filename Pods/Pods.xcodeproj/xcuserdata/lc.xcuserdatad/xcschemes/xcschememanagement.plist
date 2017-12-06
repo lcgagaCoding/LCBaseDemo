@@ -49,6 +49,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MGJRouter.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MJExtension.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -102,22 +107,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>010E9E897831FD8C1525AB652BD16F4E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>048F194196637268CEA9C9017417656F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>0F2E73645FAACF43AC6422E0B6F10B8E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1144738D9F997C5A6B01968EEF624C58</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1208EE9B9819C9D2345FFB200119AEBD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -132,7 +127,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3637B656A9D6E561478C492435793D02</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>39818EAD9B4F5290D508A9F1E9C33CB6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4DA9F1BD2EB20B44D77A3C29448D177D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -157,6 +162,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>96F3E2E20F1EE99426780FE78C4440FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9EAB3E42EF957541E6C3C76D35FD008E</key>
 		<dict>
 			<key>primary</key>
@@ -167,12 +177,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A8F83B95AAA5BFCD19A065D31A23465A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B4A3E08D49931371F7247521A50EAF79</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BDA18E402F2F9203EC6EBAB1A26361C1</key>
+		<key>C3CFFF9C676BB76A44A663A7E529E83D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -187,12 +202,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DA16147B14197D499F80AA957AC76AC5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F3C27FA038A8C9D722D5FE98CEF46267</key>
+		<key>FA7BE8E86FA1072799227A16872DDC62</key>
 		<dict>
 			<key>primary</key>
 			<true/>
